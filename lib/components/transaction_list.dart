@@ -12,10 +12,10 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return Container(
-      height: screenHeight * 0.65,
-      child: transactions.isEmpty
-          ? Column(
+    return transactions.isEmpty
+        ? LayoutBuilder(
+          builder: (context, constraints) {
+            return Column(
               children: [
                 SizedBox(
                   height: 20,
@@ -28,53 +28,54 @@ class TransactionList extends StatelessWidget {
                   height: 20,
                 ),
                 Container(
-                  height: 200,
+                  height: constraints.maxHeight * 0.6,
                   child: Image.asset(
                     'assets/images/waiting.png',
                     fit: BoxFit.cover,
                   ),
                 ),
               ],
-            )
-          : Padding(
-              padding: const EdgeInsets.all(10),
-              child: ListView.builder(
-                itemCount: transactions.length,
-                itemBuilder: (ctx, index) {
-                  final t = transactions[index];
-                  return Card(
-                    elevation: 5,
-                    margin: EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 5,
-                    ),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 30,
-                        child: Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: FittedBox(
-                            child: Text('R\$ ${t.value}'),
-                          ),
+            );
+          },
+        )
+        : Padding(
+            padding: const EdgeInsets.all(10),
+            child: ListView.builder(
+              itemCount: transactions.length,
+              itemBuilder: (ctx, index) {
+                final t = transactions[index];
+                return Card(
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 5,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: FittedBox(
+                          child: Text('R\$ ${t.value}'),
                         ),
                       ),
-                      title: Text(
-                        t.title,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      subtitle: Text(
-                        DateFormat('d MMM y').format(t.date),
-                      ),
-                      trailing: IconButton(
-                        icon: Icon(Icons.delete),
-                        color: Theme.of(context).errorColor,
-                        onPressed: () => onRemove(t.id),
-                      ),
                     ),
-                  );
-                },
-              ),
+                    title: Text(
+                      t.title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    subtitle: Text(
+                      DateFormat('d MMM y').format(t.date),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => onRemove(t.id),
+                    ),
+                  ),
+                );
+              },
             ),
-    );
+          );
   }
 }
