@@ -14,30 +14,30 @@ class TransactionList extends StatelessWidget {
 
     return transactions.isEmpty
         ? LayoutBuilder(
-          builder: (context, constraints) {
-            return Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Nenhuma transação cadastrada!',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: constraints.maxHeight * 0.6,
-                  child: Image.asset(
-                    'assets/images/waiting.png',
-                    fit: BoxFit.cover,
+            builder: (context, constraints) {
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-              ],
-            );
-          },
-        )
+                  Text(
+                    'Nenhuma transação cadastrada!',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: constraints.maxHeight * 0.6,
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              );
+            },
+          )
         : Padding(
             padding: const EdgeInsets.all(10),
             child: ListView.builder(
@@ -67,11 +67,18 @@ class TransactionList extends StatelessWidget {
                     subtitle: Text(
                       DateFormat('d MMM y').format(t.date),
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      color: Theme.of(context).errorColor,
-                      onPressed: () => onRemove(t.id),
-                    ),
+                    trailing: MediaQuery.of(context).size.width > 480
+                        ? FlatButton.icon(
+                            onPressed: () => onRemove(t.id),
+                            icon: Icon(Icons.delete),
+                            label: Text("Excluir"),
+                            color: Theme.of(context).errorColor,
+                          )
+                        : IconButton(
+                            icon: Icon(Icons.delete),
+                            color: Theme.of(context).errorColor,
+                            onPressed: () => onRemove(t.id),
+                          ),
                   ),
                 );
               },
