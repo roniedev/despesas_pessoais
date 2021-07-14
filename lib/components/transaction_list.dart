@@ -17,14 +17,14 @@ class TransactionList extends StatelessWidget {
             builder: (context, constraints) {
               return Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
                     'Nenhuma transação cadastrada!',
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
@@ -46,7 +46,7 @@ class TransactionList extends StatelessWidget {
                 final t = transactions[index];
                 return Card(
                   elevation: 5,
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                     vertical: 8,
                     horizontal: 5,
                   ),
@@ -70,8 +70,8 @@ class TransactionList extends StatelessWidget {
                     trailing: MediaQuery.of(context).size.width > 480
                         ? FlatButton.icon(
                             onPressed: () => onRemove(t.id),
-                            icon: Icon(Icons.delete),
-                            label: Text("Excluir"),
+                            icon: const Icon(Icons.delete),
+                            label: const Text("Excluir"),
                             color: Theme.of(context).errorColor,
                           )
                         : IconButton(
